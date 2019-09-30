@@ -35,7 +35,6 @@ function configureAutocomplete(data) {
             location.href = "craft-details.html?name=" + craftId;
         }
     }).autocomplete( "instance" )._renderItem = function(ul, item) {
-        console.log("Autocomplete attempting to work")
         name = item["Name"];
         return $("<li>")
             .append("<div><i>" + name + "</i>" + "</div>")
@@ -167,7 +166,6 @@ function customizeCraftDetailsPage(data) {
             .attr("onerror", "this.src='images/artisan-fair-table.jpg'")
             .css({'width' : '100%', 'margin-left' : '15px'})
             .appendTo($rdiv);
-        console.log(imgTitles);
     }
 }
 
