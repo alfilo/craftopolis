@@ -43,6 +43,14 @@ function configureAutocomplete(data) {
     };
 }
 
+function makeImg(className, name, id) {
+    return $("<img>").addClass(className)
+        .prop("src", "images/" + id + ".jpg")
+        .prop("title", name)
+        .prop("alt", name)
+        .attr("onerror", "this.src='images/artisan-fair-table.jpg'");
+}
+
 function handleCSV() {
     Papa.parse("crafts.csv", {
         download: true,
@@ -59,16 +67,58 @@ function handleCSV() {
 
             // If the location includes a search entry, we're customizing the
             // craft details page for the requested craft; otherwise, we're
-            // setting up the craft search (using autocomplete) on the
-            // top-level page (index.html).
+            // setting up the craft search (using autocomplete) and explicit
+            // links on the main crafts page (crafts.html).
             if (location.search) {
-                customizeCraftDetailsPage(results.data);
+                customizeCraftDetailsPage(craftData);
             } else {
-                configureAutocomplete(results.data);
+                configureAutocomplete(craftData);
+
+                // Create explicit links and images for individual crafts,
+                // separated by category
+                for (var i = 0; i < craftData.length; i++) {
+                    // Create an h3 & ul for this craft's category, if it
+                    // hasn't been created yet
+                    var category = craftData[i]["Category"];
+                    var categoryId = makeId(category);
+                    var $categoryUl = $('#' + categoryId);
+                    if ($categoryUl.length === 0) {
+                        var $mainColumn = $(".column.main");
+                        $("<h3>").text(category).appendTo($mainColumn);
+                        $categoryUl = $("<ul>").attr("id", categoryId).appendTo($mainColumn);
+                    }
+
+                    // Save info for the current craft
+                    var name = craftData[i]["Name"];
+                    var year = craftData[i]["Year"];
+                    var about = craftData[i]["About"];
+                    var titles = craftData[i]["Image"];
+                    // Note that this ignores custom titles and uses the craft name
+                    // to create the thumbnail and pop-up images for now
+                    var imgTitles = (titles ? titles.split(':') : [name]);
+                    console.log(name + ", " + year + ", " + about + ", " + imgTitles);
+
+                    // Make links, images, and large-image pop-ups for the craft
+                    var craftId = makeId(name);
+                    var href = "craft-details.html?name=" + craftId;
+                    // Add to the category's ul:
+                    // <li><span><a></a><img ...thumbnail><img ...large></span></li><br>
+                    $categoryUl
+                        .append($("<li>")
+                            .append($("<span>")
+                                .append($("<a>")
+                                    .prop("href", href)
+                                    .addClass("link-text")
+                                    .text(name))
+                                .append(makeImg("thumb-img", name, craftId))
+                                .append(makeImg("large-img", name, craftId))))
+                        .append("<br>");
+                }
             }
         }
     });
 }
+
 function customizeCraftDetailsPage(data) {
     // Find the entry for the requested craft (name search param)
     var urlParams = new URLSearchParams(location.search);
