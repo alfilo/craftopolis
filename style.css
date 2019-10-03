@@ -155,6 +155,13 @@ span:hover .large-img {
     display: initial;
 }
 
+/* Search (autocomplete) images (shown on focus) */
+.search-img {
+    position: fixed;
+    width: 200px;
+    z-index: 100;
+}
+
 /* === CONTACT FORM === */
 
 /* Form container */

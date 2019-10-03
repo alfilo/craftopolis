@@ -19,6 +19,15 @@ function configureAutocomplete(data) {
             }));
         },
         minLength: 0,
+        focus: function(event, ui) {
+            $(".search-img").hide();
+            makeImg("search-img", ui.item["Name"], makeId(ui.item["Name"]))
+                .css({"left": (event.clientX + 20) + "px", "top": (event.clientY + 30) + "px"})
+                .appendTo($(document.body));
+        },
+        close: function(event, ui) {
+            $(".search-img").hide();
+        },
         select: function(event, ui) {
             var craftId = makeId(ui.item["Name"]);
 
