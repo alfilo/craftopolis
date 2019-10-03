@@ -142,18 +142,17 @@ img {
 
 /* Large images (hidden unless hovered over) */
 .large-img {
-    position: absolute;
     display: none;
-    float: left;
+    position: absolute;
+    left: 20px;
+    top: 40px;
     width: 400px;
+    z-index: 1;
 }
 
 /* Pop up large images on hover */
 span:hover .large-img {
-    display: block;
-    left: 20px;
-    top: 40px;
-    z-index: 1;
+    display: initial;
 }
 
 /* === CONTACT FORM === */
