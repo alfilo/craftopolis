@@ -21,7 +21,14 @@ function configureAutocomplete(data) {
         minLength: 0,
         focus: function(event, ui) {
             $(".search-img").hide();
-            makeImg("search-img", ui.item["Name"], makeId(ui.item["Name"]))
+            var name = ui.item["Name"];
+            var images = ui.item["Images"];
+            var imgTitles = (images ? images.split(':') : [name]);
+            // Take one of the image titles, if there are multiple
+            var date = new Date();
+            var imgTitle = imgTitles[date.getSeconds() % imgTitles.length];
+            makeImg(imgTitle)
+                .addClass("search-img")
                 .css({"left": (event.clientX + 20) + "px", "top": (event.clientY + 30) + "px"})
                 .appendTo($(document.body));
         },
@@ -51,11 +58,11 @@ function configureAutocomplete(data) {
     };
 }
 
-function makeImg(className, name, id) {
-    return $("<img>").addClass(className)
-        .prop("src", "images/" + id + ".jpg")
-        .prop("title", name)
-        .prop("alt", name)
+function makeImg(title) {
+    return $("<img>")
+        .prop("src", "images/" + makeId(title) + ".jpg")
+        .prop("title", title)
+        .prop("alt", title)
         .attr("onerror", "this.src='images/artisan-fair-table.jpg'");
 }
 
@@ -100,11 +107,10 @@ function handleCSV() {
                     var name = craftData[i]["Name"];
                     var year = craftData[i]["Year"];
                     var about = craftData[i]["About"];
-                    var titles = craftData[i]["Image"];
-                    // Note that this ignores custom titles and uses the craft name
-                    // to create the thumbnail and pop-up images for now
-                    var imgTitles = (titles ? titles.split(':') : [name]);
-                    console.log(name + ", " + year + ", " + about + ", " + imgTitles);
+                    var images = craftData[i]["Images"];
+                    // Take the first of the image titles
+                    var imgTitle = (images ? images.split(':', 1)[0] : name);
+                    console.log(name + ", " + year + ", " + about + ", " + imgTitle);
 
                     // Make links, images, and large-image pop-ups for the craft
                     var craftId = makeId(name);
@@ -118,8 +124,8 @@ function handleCSV() {
                                     .prop("href", href)
                                     .addClass("link-text")
                                     .text(name))
-                                .append(makeImg("thumb-img", name, craftId))
-                                .append(makeImg("large-img", name, craftId))))
+                                .append(makeImg(imgTitle).addClass("thumb-img"))
+                                .append(makeImg(imgTitle).addClass("large-img"))))
                         .append("<br>");
                 }
             }
@@ -145,12 +151,12 @@ function customizeCraftDetailsPage(data) {
     // Save non-standard image titles, make the full name of the craft, and delete values
     // that aren't used in the feature table
     var name = craftInfo["Name"];
-    var titles = craftInfo["Image"];
-    var imgTitles = titles ? titles.split(':') : [ name ];
+    var images = craftInfo["Images"];
+    var imgTitles = images ? images.split(':') : [name];
     var about = craftInfo["About"]
     var year = craftInfo["Year"]
     delete craftInfo["Name"];
-    delete craftInfo["Image"];
+    delete craftInfo["Images"];
 
     // Update heading
     $("#header h1").text(name);
@@ -161,18 +167,11 @@ function customizeCraftDetailsPage(data) {
     // Update p's
     $(".column.main p").text(about);
 
-    
-
     // Update the craft image(s)
     var $rdiv = $("div.right");
     for (var i = 0; i < imgTitles.length; i++) {
         var title = imgTitles[i];
-        var id = makeId(title);
-        $("<img>")
-            .prop("src", "images/" + id + ".jpg")
-            .prop("title", title)
-            .prop("alt", title)
-            .attr("onerror", "this.src='images/artisan-fair-table.jpg'")
+        makeImg(title)
             .css({'width' : '100%', 'margin-left' : '15px'})
             .appendTo($rdiv);
     }
