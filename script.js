@@ -82,51 +82,46 @@ function handleCSV() {
 
             // If the location includes a search entry, we're customizing the
             // craft details page for the requested craft; otherwise, we're
-            // setting up the craft search (using autocomplete) and explicit
-            // links on the main crafts page (crafts.html).
+            // setting up the search (using autocomplete) and category images
+            // with links to crafts on the main crafts page (crafts.html).
             if (location.search) {
                 customizeCraftDetailsPage(craftData);
             } else {
                 configureAutocomplete(craftData);
-
-                // Create images for categories with links for individual
-                // crafts that pop up over the images on hover
-                var $mainColumn = $(".column.main");
-                for (var i = 0; i < craftData.length; i++) {
-                    // Create an h3 & ul for this craft's category, if it
-                    // hasn't been created yet
-                    var category = craftData[i]["Category"];
-                    var categoryId = makeId(category);
-                    var $categoryUl = $('#' + categoryId);
-                    if ($categoryUl.length === 0) {
-                        $categoryUl = $("<ul>").attr("id", categoryId);
-                        $("<div>").addClass("cat-div")
-                            .append(makeImg(category).addClass("cat-img"))
-                            .append($("<div>").addClass("cat-text")
-                                .append($("<h4>").text(category))
-                                .append($categoryUl))
-                            .appendTo($mainColumn);
-                    }
-
-                    // Save info for the current craft
-                    var name = craftData[i]["Name"];
-                    var year = craftData[i]["Year"];
-                    var about = craftData[i]["About"];
-                    var images = craftData[i]["Images"];
-                    // Take the first of the image titles
-                    var imgTitle = (images ? images.split(':', 1)[0] : name);
-                    console.log(name + ", " + year + ", " + about + ", " + imgTitle);
-
-                    // Make links for the craft
-                    var craftId = makeId(name);
-                    var href = "craft-details.html?name=" + craftId;
-                    $categoryUl
-                        .append($("<li>")
-                            .append($("<a>").prop("href", href).text(name)));
-                }
+                createCategoryView();
             }
         }
     });
+}
+
+function createCategoryView() {
+    var $mainColumn = $(".column.main");
+    for (var i = 0; i < craftData.length; i++) {
+        var name = craftData[i]["Name"];
+        var category = craftData[i]["Category"];
+        var categoryId = makeId(category);
+        var $categoryUl = $('#' + categoryId);
+        // If we haven't seen this category yet, create an image and
+        // pop-up text (header & link list)
+        if ($categoryUl.length === 0) {
+            var images = craftData[i]["Images"];
+            // Take the first of the image titles for this craft
+            var imgTitle = (images ? images.split(':', 1)[0] : name);
+            $categoryUl = $("<ul>").attr("id", categoryId);
+            $("<div>").addClass("cat-div")
+                .append(makeImg(imgTitle).addClass("cat-img"))
+                .append($("<div>").addClass("cat-text")
+                    .append($("<h4>").text(category))
+                    .append($categoryUl))
+                .appendTo($mainColumn);
+        }
+        // Make links for the craft
+        var craftId = makeId(name);
+        var href = "craft-details.html?name=" + craftId;
+        $categoryUl
+            .append($("<li>")
+                .append($("<a>").prop("href", href).text(name)));
+    }
 }
 
 function customizeCraftDetailsPage(data) {
