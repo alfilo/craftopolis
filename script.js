@@ -89,8 +89,9 @@ function handleCSV() {
             } else {
                 configureAutocomplete(craftData);
 
-                // Create explicit links and images for individual crafts,
-                // separated by category
+                // Create images for categories with links for individual
+                // crafts that pop up over the images on hover
+                var $mainColumn = $(".column.main");
                 for (var i = 0; i < craftData.length; i++) {
                     // Create an h3 & ul for this craft's category, if it
                     // hasn't been created yet
@@ -98,9 +99,13 @@ function handleCSV() {
                     var categoryId = makeId(category);
                     var $categoryUl = $('#' + categoryId);
                     if ($categoryUl.length === 0) {
-                        var $mainColumn = $(".column.main");
-                        $("<h3>").text(category).appendTo($mainColumn);
-                        $categoryUl = $("<ul>").attr("id", categoryId).appendTo($mainColumn);
+                        $categoryUl = $("<ul>").attr("id", categoryId);
+                        $("<div>").addClass("cat-div")
+                            .append(makeImg(category).addClass("cat-img"))
+                            .append($("<div>").addClass("cat-text")
+                                .append($("<h4>").text(category))
+                                .append($categoryUl))
+                            .appendTo($mainColumn);
                     }
 
                     // Save info for the current craft
@@ -112,21 +117,12 @@ function handleCSV() {
                     var imgTitle = (images ? images.split(':', 1)[0] : name);
                     console.log(name + ", " + year + ", " + about + ", " + imgTitle);
 
-                    // Make links, images, and large-image pop-ups for the craft
+                    // Make links for the craft
                     var craftId = makeId(name);
                     var href = "craft-details.html?name=" + craftId;
-                    // Add to the category's ul:
-                    // <li><span><a></a><img ...thumbnail><img ...large></span></li><br>
                     $categoryUl
                         .append($("<li>")
-                            .append($("<span>")
-                                .append($("<a>")
-                                    .prop("href", href)
-                                    .addClass("link-text")
-                                    .text(name))
-                                .append(makeImg(imgTitle).addClass("thumb-img"))
-                                .append(makeImg(imgTitle).addClass("large-img"))))
-                        .append("<br>");
+                            .append($("<a>").prop("href", href).text(name)));
                 }
             }
         }

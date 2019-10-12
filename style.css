@@ -121,38 +121,43 @@ img {
     width: 65%;
 }
 
-
-/* Craft-details links */
-.link-text {
+/* Blocks for category images & lists */
+.cat-div {
+    display: inline-block;  /* Make the width of box same as image */
     position: relative;
-    left: 20px;
-    top: 0px;
+    margin: 0px 20px 20px 0px;
 }
 
-/* Spans containing thumbnail & large images */
-.column.main li > span {
-    position: relative;
+/* Category images */
+.cat-img {
+    height: 200px;
 }
 
-/* Thumbnail images */
-.thumb-img {
-    float: left;
-    width: 30px;
-}
-
-/* Large images (hidden unless hovered over) */
-.large-img {
+/* Category heading & item-link list */
+.cat-text {
     display: none;
     position: absolute;
-    left: 20px;
-    top: 40px;
-    width: 400px;
-    z-index: 1;
+    padding: 20px;
 }
 
-/* Pop up large images on hover */
-span:hover .large-img {
-    display: initial;
+/* Modify h4 & ul defaults slightly */
+.cat-text h4 {
+    margin: 0;
+}
+
+.cat-text ul {
+    margin-bottom: 0;
+    padding-left: 20px;
+}
+
+/* On category hover, make image less opaque and pop up category text */
+.cat-div:hover .cat-img {
+    opacity: 0.4;
+    filter: alpha(opacity=40);  /* For IE8 and earlier */
+}
+
+.cat-div:hover .cat-text {
+    display: inline-block;
 }
 
 /* Search (autocomplete) images (shown on focus) */
