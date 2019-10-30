@@ -16,21 +16,25 @@ img {
 
 /* Style the header */
 #header {
-    background-color: #f1f1f1;
-    /* Can't set the opacity of a background.  Workaround: start with another
-       "image": a gradient from white to white with opacity 0.4.
-       For wide-enough screens, let the real image cover part of the screen
-       and repeat left-to-right.  See the bottom for updated background-size
-       for narrow screens.
-   */
-    background-image: linear-gradient(rgba(255,255,255,.4), rgba(255,255,255,.4)),
-                      url(images/artisan-fair-table.jpg);
-    background-repeat: no-repeat, repeat-x;
-    background-size: cover, 60%;
+    background-color: black;
+    background-image: url(images/craftopolis.jpg);
+    background-repeat: repeat-x;
+    background-size: contain;
     background-position: center;
 
     padding: 20px;
+    color: red;
     text-align: center;
+}
+
+#header h1 {
+    margin: 60px 0 0;  /* Make space only above */
+}
+
+#header p, #header a {
+    margin: 0 0 35px;  /* Make space only below */
+    color: rgba(255, 0, 0, 0.8);
+    font-weight: bold;
 }
 
 /* Style the footer */
@@ -195,13 +199,23 @@ img {
 }
 
 /* Responsive layout for narrow screens */
-@media (max-width: 600px) {
+@media only screen and (max-width: 600px) {
     /* Stack the two columns */
     .column.right, .column.main {
         width: 100%;
     }
-    /* Make background image fill #header */
+}
+
+/* When the paragraph splits into two lines, make more room
+   above and below.  Also, keep the image height fixed. */
+@media only screen and (max-width: 369px) {
     #header {
-        background-size: cover;
+        background-size: auto 100%;
+    }
+    #header h1 {
+        margin-top: 90px;
+    }
+    #header p {
+        margin-bottom: 50px;
     }
 }
