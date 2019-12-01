@@ -151,7 +151,7 @@ img {
 }
 
 .cat-text ul {
-    margin-bottom: 0;
+    margin: 0.33em 0 0;  /* Shrink space above and remove space below */
     padding-left: 20px;  /* Space for list bullets */
 }
 
