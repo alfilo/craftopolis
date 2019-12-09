@@ -21,6 +21,7 @@ function configureAutocomplete(data) {
         minLength: 0,
         focus: function(event, ui) {
             $(".search-img").hide();
+            $(".column.right img").hide();
             var name = ui.item["Name"];
             var images = ui.item["Images"];
             var imgTitles = (images ? images.split(':') : [name]);
@@ -34,6 +35,7 @@ function configureAutocomplete(data) {
         },
         close: function(event, ui) {
             $(".search-img").hide();
+            $(".column.right img").show();
         },
         select: function(event, ui) {
             var craftId = makeId(ui.item["Name"]);
