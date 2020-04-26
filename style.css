@@ -107,7 +107,7 @@ img {
     display: inline-block;
 }
 
-/* === MAIN CONTENT === */
+/* === COLUMN LAYOUT === */
 
 /* Create two unequal columns that float next to each other */
 .column {
@@ -124,6 +124,15 @@ img {
 .column.main {
     width: 65%;
 }
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* === MAIN CONTENT === */
 
 /* Blocks for category images & lists */
 .cat-div {
@@ -191,12 +200,7 @@ img {
     border: 0;
 }
 
-/* Clear floats after the columns */
-.row:after {
-    content: "";
-    display: table;
-    clear: both;
-}
+/* === RESPONSIVE LAYOUT === */
 
 /* Responsive layout for narrow screens */
 @media only screen and (max-width: 600px) {
