@@ -16,7 +16,7 @@ function handleCSV() {
             if (location.search) {
                 contentDisplay.details.generate();
             } else {
-                contentDisplay.search.configureSearch("right", undefined, ["Year"]);
+                contentDisplay.search.configureSearch("right", {}, ["Year"]);
                 contentDisplay.categoryView.generate();
             }
         }
