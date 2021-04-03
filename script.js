@@ -8,7 +8,7 @@ function handleCSV() {
         complete: function(results) {
             var content = results.data;  // Save the CSV data
             var idKeys = ["Name"];
-            var contentDisplay = new ContentDisplay(null, null, content, idKeys);
+            var contentDisplay = new ContentDisplay(content, idKeys, {});
             // If the location includes a search entry, we're customizing the
             // details page for the requested craft; otherwise, we're
             // setting up the search (using autocomplete) and category images
