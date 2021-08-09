@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Flutterby Plantarium</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="cont-disp/display.css">
+<link rel="stylesheet" type="text/css" href="style.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.3/papaparse.min.js"></script>
+<script src="cont-disp/display.js"></script>
+<script src="script.js"></script>
+</head>
+<body>
+
+
+<!-- Header placeholder -->
+<div id="header"></div>
+
+<!-- Top navigation bar placeholder -->
+<div id="topnav"></div>
+
+<div class="row">
+  <div class="column main">
+    <h2>Craft Request Form</h2>
+    <p class="news">We will accept craft requests through November for
+      delivery in "the neighborhood" (around Lansing, Ithaca, Dryden,
+      and Trumansburg).</p>
+    <p>Please provide your name, email address and the list of crafts
+      that you would like to purchase.  We will confirm availability
+      and other logistics over email shortly.</p>
+    <form action="https://docs.google.com/forms/d/e/1FAIpQLSeF1jBdozBE4828mwkte4Y0hQrzeVf8RuC-s84juRpcM2z5rQ/formResponse" method="post">
+      <input type="text" id="name" name="entry.1608627400" placeholder="Your Name" required/><br>
+      <input type="email" id="email" name="entry.1034399466" placeholder="Email Address" required/><br><br>
+      <label for="crafts" class="big-label">Craft Names and Quantities</label><br>
+      <p>Pricing can be found in the individual craft pages.</p>
+      <textarea id="crafts" name="entry.972583497" placeholder="Ex: 6 Kusudamas, 3 earrings, 5 ..." required maxlength="500" rows="10"></textarea><br><br>
+      <input type="submit" value="Send"/>
+    </form>
+  </div>
+  <div class="column side">
+    <img src="images/default.jpg"
+         title="Crafts!"
+         alt="Surrounded with Crafts!"
+         style="width:100%;margin-left:15px;">
+  </div>
+</div>
+
+<!-- Footer placeholder -->
+<div id="footer"></div>
+
+</body>
+</html>
