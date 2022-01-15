@@ -3,7 +3,7 @@
 /* Style the header */
 #header {
   background-color: black;
-  background-image: url(images/craftopolis.jpg);
+  background-image: url("images/craftopolis.jpg");
   background-repeat: repeat-x;
   background-size: contain;
   color: red;
@@ -16,7 +16,7 @@
 #header p,
 #header a {
   margin: 0 0 35px; /* Make space only below */
-  color: rgba(255, 0, 0, 0.8);
+  color: rgb(255 0 0 / 80%);
   font-weight: bold;
 }
 
